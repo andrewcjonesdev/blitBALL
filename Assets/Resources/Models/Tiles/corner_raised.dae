@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+    <asset>
+        <contributor>
+            <authoring_tool>MilkShape 3D 1.8.5 beta2</authoring_tool>
+            <source_data>file://C:/Users/Public/Documents/Unity Projects/BlitBALL/Dev/Objects/Tiles/MS/corner_raised.ms3d</source_data>
+        </contributor>
+        <created>2007-05-21T20:10:16Z</created>
+        <modified>2007-05-21T20:10:16Z</modified>
+        <unit meter="1.000000" name="meter" />
+        <up_axis>Y_UP</up_axis>
+    </asset>
+    <library_images>
+        <image id="Mat-image" name="Mat-image">
+            <init_from>../../../../Assets/resources/textures/bluegrid.png</init_from>
+        </image>
+    </library_images>
+    <library_materials>
+        <material id="Mat" name="Mat">
+            <instance_effect url="#Mat-effect" />
+        </material>
+    </library_materials>
+    <library_effects>
+        <effect id="Mat-effect" name="Mat-effect">
+            <profile_COMMON>
+                <newparam sid="Mat-image-surface">
+                    <surface type="2D">
+                        <init_from>Mat-image</init_from>
+                        <format>A8R8G8B8</format>
+                    </surface>
+                </newparam>
+                <newparam sid="Mat-image-sampler">
+                    <sampler2D>
+                        <source>Mat-image-surface</source>
+                        <minfilter>LINEAR_MIPMAP_LINEAR</minfilter>
+                        <magfilter>LINEAR</magfilter>
+                    </sampler2D>
+                </newparam>
+                <technique sid="common">
+                    <phong>
+                        <emission>
+                            <color>0.000000 0.000000 0.000000 1.000000</color>
+                        </emission>
+                        <ambient>
+                            <color>0.200000 0.200000 0.200000 1.000000</color>
+                        </ambient>
+                        <diffuse>
+                            <texture texture="Mat-image-sampler" texcoord="" />
+                        </diffuse>
+                        <specular>
+                            <color>0.000000 0.000000 0.000000 1.000000</color>
+                        </specular>
+                        <shininess>
+                            <float>0.000000</float>
+                        </shininess>
+                        <reflective>
+                            <color>1.000000 1.000000 1.000000 1.000000</color>
+                        </reflective>
+                        <reflectivity>
+                            <float>1.000000</float>
+                        </reflectivity>
+                        <transparent opaque="A_ONE">
+                            <color>0.000000 0.000000 0.000000 1.000000</color>
+                        </transparent>
+                        <transparency>
+                            <float>1.000000</float>
+                        </transparency>
+                        <index_of_refraction>
+                            <float>0.000000</float>
+                        </index_of_refraction>
+                    </phong>
+                </technique>
+            </profile_COMMON>
+        </effect>
+    </library_effects>
+    <library_geometries>
+        <geometry id="corner_raised-geometry" name="corner_raised-geometry">
+            <mesh>
+                <source id="corner_raised-positions" name="position">
+                    <float_array id="corner_raised-positions-array" count="12">50 -50 50 50 -50 -50 -50 50 -50 -50 -50 50</float_array>
+                    <technique_common>
+                        <accessor source="#corner_raised-positions-array" count="4" stride="3">
+                            <param name="X" type="float" />
+                            <param name="Y" type="float" />
+                            <param name="Z" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <source id="corner_raised-normals" name="normal">
+                    <float_array id="corner_raised-normals-array" count="9">0.408248 0.816497 0.408248 0.707107 0.707107 0 0 0.707107 0.707107</float_array>
+                    <technique_common>
+                        <accessor source="#corner_raised-normals-array" count="3" stride="3">
+                            <param name="X" type="float" />
+                            <param name="Y" type="float" />
+                            <param name="Z" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <source id="corner_raised-texcoords" name="texcoord">
+                    <float_array id="corner_raised-texcoords-array" count="8">1 0 1 1 0 1 0 0</float_array>
+                    <technique_common>
+                        <accessor source="#corner_raised-texcoords-array" count="4" stride="2">
+                            <param name="S" type="float" />
+                            <param name="T" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <vertices id="corner_raised-geometry-vertices">
+                    <input semantic="POSITION" source="#corner_raised-positions" />
+                </vertices>
+                <triangles material="Mat" count="2">
+                    <input semantic="VERTEX" source="#corner_raised-geometry-vertices" offset="0" />
+                    <input semantic="NORMAL" source="#corner_raised-normals" offset="1" />
+                    <input semantic="TEXCOORD" source="#corner_raised-texcoords" offset="2" />
+                    <p>0 0 0 1 1 1 2 0 2 3 2 3 0 0 0 2 0 2</p>
+                </triangles>
+            </mesh>
+        </geometry>
+    </library_geometries>
+    <library_visual_scenes>
+        <visual_scene id="SceneRoot" name="SceneRoot">
+            <node id="corner_raised" name="corner_raised" type="NODE">
+                <instance_geometry url="#corner_raised-geometry">
+                    <bind_material>
+                        <technique_common>
+                            <instance_material symbol="Mat" target="#Mat" />
+                        </technique_common>
+                    </bind_material>
+                </instance_geometry>
+            </node>
+        </visual_scene>
+    </library_visual_scenes>
+    <scene>
+        <instance_visual_scene url="#SceneRoot" />
+    </scene>
+</COLLADA>
