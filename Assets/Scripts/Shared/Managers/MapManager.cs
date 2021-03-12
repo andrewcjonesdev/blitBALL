@@ -8,44 +8,29 @@ using System.IO;
 public static class MapManager
 {
 
-    public static int width = 14;
-    public static int length = 14;
-    public static int height = 7;
-
-
-    /*public static void SaveDefaultMap()
-    {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream stream = new FileStream(Application.dataPath + "/Maps/Default.dat", FileMode.Create);
-
-        TestData data = new TestData();
-        data.CreateDefault();
-
-        bf.Serialize(stream, data);
-        stream.Close();
-    }*/
-
     public static void Build()
     {
 
-        MapData map_data = new MapData();
-        map_data.CreateDefault();
-        //map_data.Save("test");
-        map_data.Load("test");
-
+        Map map = new Map();
         GameObject tile;
         int d;
 
-        for (int ty = 0; ty < map_data.height; ty++)
+        map.Init();
+        //map.Clear();
+        //map.CreateDefault();
+        //map.Save("test");
+        
+        map.Load("test");
+
+        for (int ty = 0; ty < map.height; ty++)
         {
-            for (int tx = 0; tx < map_data.width; tx++)
+            for (int tx = 0; tx < map.width; tx++)
             {
-                for (int tz = 0; tz < map_data.length; tz++)
+                for (int tz = 0; tz < map.length; tz++)
                 {
                     for (int tl = 0; tl <= 1; tl++)
                     {
-                        d = map_data.grid[tx, ty, tz, tl];
-                        //Debug.Log(d);
+                        d = map.data.grid[tx, ty, tz, tl];
                         if (d != 255)
                         {
 
@@ -54,9 +39,9 @@ public static class MapManager
                             //tile.GetComponent<Renderer>().material = Manager.instance.materials[0];
                             tile.transform.position = new Vector3
                             (
-                                tz-6.5f,
-                                ty-0.5f,
-                                tx-6.5f
+                                tz - 6.5f,
+                                ty - 0.5f,
+                                tx - 6.5f
                             );
                             tile.transform.eulerAngles = new Vector3
                             (
@@ -79,20 +64,29 @@ public static class MapManager
 
 }
 
-//[Serializable]
+[Serializable]
 public class MapData
+{
+
+    public byte[,,,] grid = new byte[14, 7, 14, 2];
+
+}
+
+public class Map
 {
 
     public int width;
     public int length;
     public int height;
-    public byte[,,,] grid = new byte[14, 7, 14, 2];
-
-    public void CreateDefault()
+    public MapData data = new MapData();
+    public void Init()
     {
-        width = grid.GetLength(0);
-        height = grid.GetLength(1);
-        length = grid.GetLength(2);
+        width = data.grid.GetLength(0);
+        height = data.grid.GetLength(1);
+        length = data.grid.GetLength(2);
+    }
+    public void Clear()
+    {
         for (int ty = 0; ty < height; ty++)
         {
             for (int tx = 0; tx < width; tx++)
@@ -101,22 +95,23 @@ public class MapData
                 {
                     for (int tl = 0; tl <= 1; tl++)
                     {
-                        grid[tx, ty, tz, tl] = 255;
+                        data.grid[tx, ty, tz, tl] = 255;
                     }
                 }
             }
-            grid[4, 0, 5, 0] = 0;
-            grid[5, 0, 5, 0] = 0;
         }
+    }
+    public void CreateDefault()
+    {
+        data.grid[4, 0, 5, 0] = 0;
+        data.grid[5, 0, 5, 0] = 0;
     }
 
     public void Load(string file)
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream stream = new FileStream(Application.dataPath + "/Maps/" + file + ".dat", FileMode.Open);
-        //bf.Deserialise(stream, grid);
-        grid = bf.Deserialise(stream);
-        //Debug.Log(stream);
+        data = bf.Deserialize(stream) as MapData;
         stream.Close();
     }
 
@@ -124,7 +119,7 @@ public class MapData
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream stream = new FileStream(Application.dataPath + "/Maps/" + file + ".dat", FileMode.Create);
-        bf.Serialize(stream, grid);
+        bf.Serialize(stream, data);
         stream.Close();
     }
 
