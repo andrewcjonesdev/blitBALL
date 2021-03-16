@@ -16,11 +16,11 @@ public static class MapManager
         int d;
 
         map.Init();
-        //map.Clear();
-        //map.CreateDefault();
+        map.Clear();
+        map.CreateDefault();
+
         //map.Save("test");
-        
-        map.Load("test");
+        //map.Load("test");
 
         for (int ty = 0; ty < map.height; ty++)
         {
@@ -103,8 +103,13 @@ public class Map
     }
     public void CreateDefault()
     {
-        data.grid[4, 0, 5, 0] = 0;
-        data.grid[5, 0, 5, 0] = 0;
+        for (int tx = 2; tx < 12; tx++)
+        {
+            for (int tz = 2; tz < 12; tz++)
+            {
+                data.grid[tx, 2, tz,0] = 0;
+            }
+        }
     }
 
     public void Load(string file)

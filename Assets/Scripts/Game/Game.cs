@@ -6,11 +6,8 @@ public class Game : MonoBehaviour
 {
     void Start()
     {
-        Debug.Log("Started");
         MatManager.LoadMaterials();
         TileManager.LoadTiles();
-        //MapManager.SaveDefaultMap();
-        //MapManager.CreateDefault();
         MapManager.Build();
     }
 

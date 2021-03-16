@@ -11,4 +11,9 @@ public class Main : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void GoToEditor()
+    {
+        SceneManager.LoadScene("Editor");
+    }
+
 }
